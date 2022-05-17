@@ -1,0 +1,7 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3ms;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
