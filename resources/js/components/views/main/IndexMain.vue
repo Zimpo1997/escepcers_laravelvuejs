@@ -9,7 +9,10 @@
 
           <v-list-item-content>
             <v-list-item-title>{{ currentUser.name }}</v-list-item-title>
-            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+            <v-list-item-subtitle
+              ><v-icon color="green" size="12px">mdi-circle</v-icon>
+              Online</v-list-item-subtitle
+            >
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -25,12 +28,12 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/accounts">
+        <v-list-item link to="/finance">
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Accounts</v-list-item-title>
+            <v-list-item-title>Finance</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item link @click="logout">
@@ -67,37 +70,37 @@ export default {
   data: () => ({
     drawer: null,
     currentUser: {},
-    token: localStorage.getItem('token'),
+    token: localStorage.getItem("token"),
   }),
   methods: {
     logout() {
       axios
-        .post('/api/logout')
+        .post("/api/logout")
         .then((response) => {
-          localStorage.removeItem('token')
-          this.$router.push('/login')
+          localStorage.removeItem("token");
+          this.$router.push("/login");
         })
         .catch((error) => {
-          console.log(error.response.data)
-        })
+          console.log(error.response.data);
+        });
     },
     getUser() {
       axios
-        .get('/api/user')
+        .get("/api/user")
         .then((response) => {
-          this.currentUser = response.data
-          console.log(response.data)
+          this.currentUser = response.data;
+          console.log(response.data);
         })
         .catch((error) => {
-          console.log(error.response.data)
-        })
+          console.log(error.response.data);
+        });
     },
   },
   created() {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
-    axios.defaults.headers.post['Content-Type'] =
-      'application/x-www-form-urlencoded'
-    this.getUser()
+    axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
+    axios.defaults.headers.post["Content-Type"] =
+      "application/x-www-form-urlencoded";
+    this.getUser();
   },
-}
+};
 </script>

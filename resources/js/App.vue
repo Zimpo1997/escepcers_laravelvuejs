@@ -5,3 +5,16 @@
     </transition>
   </div>
 </template>
+<script>
+import { mapState } from "vuex";
+
+export default {
+  setup() {},
+  computed: {
+    ...mapState({
+      user: (state) => state.user,
+    }),
+  },
+};
+</script>
+

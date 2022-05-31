@@ -17,7 +17,15 @@
             :items="desserts"
             :search="search"
             @click:row="ClickRow"
-          ></v-data-table>
+          >
+            <template slot="body.append">
+              <tr class="pink--text">
+                <th class="title" colspan="2">Totals</th>
+                <th class="title">{{ sumCan_to_withdraw() }}</th>
+                <th class="title">{{ sumCant_to_withdraw() }}</th>
+              </tr>
+            </template>
+          </v-data-table>
         </v-card>
       </v-col>
       <v-col cols="12" md="4" order-sm="first">
@@ -25,11 +33,13 @@
           <v-text-field v-model="data.indate" label="วันที่"></v-text-field>
           <v-text-field v-model="data.order" label="รายการ"></v-text-field>
           <v-text-field
-            v-model="data.can_to_withdraw"
+            v-model.number="data.can_to_withdraw"
+            type="number"
             label="เบิกได้"
           ></v-text-field>
           <v-text-field
-            v-model="data.cant_to_withdraw"
+            v-model.number="data.cant_to_withdraw"
+            type="number"
             label="เบิกไม่ได้"
           ></v-text-field>
           <v-row v-if="btnState">
@@ -46,9 +56,7 @@
               </v-btn>
             </v-col>
             <v-col>
-              <v-btn block color="error" @click="deleteItem">
-                ลบรายการ
-              </v-btn>
+              <v-btn block color="error" @click="deleteItem"> ลบรายการ </v-btn>
             </v-col>
           </v-row>
         </v-sheet>
@@ -76,74 +84,86 @@
 
 <script>
 export default {
-  name: 'FinanceCreate',
+  name: "FinanceCreate",
   data() {
     return {
       dialogDelete: false,
       btnState: true,
       data: {
-        indate: '',
-        order: '',
-        can_to_withdraw: '',
-        cant_to_withdraw: '',
+        indate: "",
+        order: "",
+        can_to_withdraw: null,
+        cant_to_withdraw: null,
       },
-      search: '',
+      search: "",
       headers: [
         {
-          text: 'วันที่',
-          align: 'strat',
+          text: "วันที่",
+          align: "strat",
           filterable: false,
-          value: 'indate',
-          width: '15%',
+          value: "indate",
+          width: "15%",
         },
-        { text: 'รายการ', value: 'order' },
-        { text: 'เบิกได้', value: 'can_to_withdraw', width: '20%' },
-        { text: 'เบิกไม่ได้', value: 'cant_to_withdraw', width: '20%' },
+        { text: "รายการ", value: "order" },
+        { text: "เบิกได้", value: "can_to_withdraw", width: "20%" },
+        { text: "เบิกไม่ได้", value: "cant_to_withdraw", width: "20%" },
       ],
       desserts: [],
       clickIndex: null,
-    }
+    };
   },
   methods: {
+    sumCan_to_withdraw() {
+      const sumall = this.desserts
+        .map((item) => item.can_to_withdraw)
+        .reduce((prev, curr) => prev + curr, 0);
+      return sumall;
+    },
+    sumCant_to_withdraw() {
+      const sumall = this.desserts
+        .map((item) => item.cant_to_withdraw)
+        .reduce((prev, curr) => prev + curr, 0);
+      return sumall;
+    },
     resetState() {
-      this.btnState = true
-      this.dialogDelete = false
-      this.clickIndex = null
+      this.btnState = true;
+      this.dialogDelete = false;
+      this.clickIndex = null;
       this.data = {
-        indate: '',
-        order: '',
-        can_to_withdraw: '',
-        cant_to_withdraw: '',
-      }
+        indate: "",
+        order: "",
+        can_to_withdraw: null,
+        cant_to_withdraw: null,
+      };
     },
     addItem() {
-      this.desserts.push(this.data)
-      this.resetState()
+      this.desserts.push(this.data);
+      this.resetState();
     },
     updateItem() {
-      this.desserts.splice(this.clickIndex, 1, this.data)
-      this.resetState()
+      this.desserts.splice(this.clickIndex, 1, this.data);
+      this.resetState();
     },
     deleteItem(item) {
-      this.dialogDelete = true
+      this.dialogDelete = true;
     },
     closeDelete() {
-      this.dialogDelete = false
+      this.dialogDelete = false;
     },
     deleteItemConfirm() {
-      this.desserts.splice(this.clickIndex, 1)
-      this.resetState()
+      this.desserts.splice(this.clickIndex, 1);
+      this.resetState();
     },
     ClickRow(e, i) {
-      this.btnState = false
-      this.clickIndex = i.index
+      this.btnState = false;
+      this.clickIndex = i.index;
       this.data = {
         indate: e.indate,
         order: e.order,
         can_to_withdraw: e.can_to_withdraw,
         cant_to_withdraw: e.cant_to_withdraw,
-      }
+      };
     },
   },
-}
+};
 </script>

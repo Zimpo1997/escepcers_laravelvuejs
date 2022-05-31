@@ -61,9 +61,9 @@ const router = new VueRouter({
 function isLoggedIn() {
     return localStorage.getItem("token");
 }
+
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        // if (!auth.isLoggedIn()) {
         if (!isLoggedIn()) {
             next({
                 path: '/login',
