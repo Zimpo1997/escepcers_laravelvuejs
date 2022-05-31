@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire" style="background-color: #fff">
+  <v-app id="inspire" style="background-color: #fff;">
     <v-container fluid fill-height>
       <v-layout align-center justify-center>
         <v-flex xs12 sm8 md4>
@@ -7,7 +7,7 @@
             <Logo maxWidth="30%" maxHeight="30%" />
           </div>
           <div class="d-flex justify-center mb-1">
-            <h2 class="font-weight-bold">ระบบแผนเงินบำรุงระดับโรงพยาบาล</h2>
+            <h2 class="font-weight-bold">ระบบแผนเงินบำรุง ระดับโรงพยาบาล</h2>
           </div>
           <div class="d-flex justify-center mb-2">
             <h3 class="font-weight-bold">โรงพยาบาลคีรีมาศ</h3>
@@ -26,8 +26,9 @@
                   :value="userExists"
                   color="error"
                   icon="mdi-alert"
-                  >{{ val }}</v-alert
                 >
+                  {{ val }}
+                </v-alert>
                 <v-text-field
                   prepend-icon="mdi-account"
                   v-model="form.name"
@@ -83,7 +84,7 @@
                 class="white--text"
                 @click="register"
               >
-                <span class="font-weight-bold"> สมัครสมาชิก </span>
+                <span class="font-weight-bold">สมัครสมาชิก</span>
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -94,10 +95,10 @@
 </template>
 
 <script>
-import Logo from "./../../components/Logo.vue";
+import Logo from './../../components/Logo.vue'
 export default {
-  layout: "AuthLayout",
-  name: "Register",
+  layout: 'AuthLayout',
+  name: 'Register',
   components: {
     Logo,
   },
@@ -116,29 +117,29 @@ export default {
       // },
       errors: {},
       form: {
-        name: "ศุภราช วรรณทิพภากรณ์",
-        email: "admin@gmail.com",
-        username: "benz00",
-        password: "123456789",
-        password_confirmation: "123456789",
+        name: 'ศุภราช วรรณทิพภากรณ์',
+        email: 'admin@gmail.com',
+        username: 'benz00',
+        password: '123456789',
+        password_confirmation: '123456789',
       },
       rules: {
-        required: (v) => !!v || "กรุณากรอกข้อมูล",
-        min: (v) => !!v || "จำนวนอักขระไม่น้อยกว่า 8 ตัว",
-        less: (v) => (v && v.length <= 45) || "จำนวนอักขระไม่เกิน 45 ตัวอักษร",
+        required: (v) => !!v || 'กรุณากรอกข้อมูล',
+        min: (v) => !!v || 'จำนวนอักขระไม่น้อยกว่า 8 ตัว',
+        less: (v) => (v && v.length <= 45) || 'จำนวนอักขระไม่เกิน 45 ตัวอักษร',
         email: (v) => {
-          const pattern = /.+@.+\..+/;
-          return pattern.test(v) || "อีเมลต้องถูกต้อง";
+          const pattern = /.+@.+\..+/
+          return pattern.test(v) || 'อีเมลต้องถูกต้อง'
         },
       },
-    };
+    }
   },
   methods: {
     register() {
-      console.log("register");
-      this.isLoading = true;
+      console.log('register')
+      this.isLoading = true
       this.$store
-        .dispatch("REGISTER", {
+        .dispatch('REGISTER', {
           name: this.form.name,
           email: this.form.email,
           username: this.form.username,
@@ -151,20 +152,20 @@ export default {
           //   text: "Your account has been successfully created! you can now login.",
           //   alertClass: "danger",
           // });
-          this.$refs.registerForm.reset();
-          this.$router.push("/login");
+          this.$refs.registerForm.reset()
+          this.$router.push('/login')
         })
         .catch((error) => {
-          this.userExists = true;
-          this.errors = error.response.data.errors;
+          this.userExists = true
+          this.errors = error.response.data.errors
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     valid() {
-      return this.form.password === this.form.password_confirmation;
+      return this.form.password === this.form.password_confirmation
     },
   },
-};
+}
 </script>

@@ -52,10 +52,6 @@ const store = new Vuex.Store({
                         if (status === 200) {
                             resolve(data);
                         }
-                        localStorage.setItem("token", response.data);
-
-                        // this.$refs.loginForm.reset();
-                        // this.$router.push("/dashboard");
                     })
                     .catch((error) => {
                         reject(error);
@@ -83,7 +79,22 @@ const store = new Vuex.Store({
                     });
 
             });
-        }
+        },
+        LOGOUT: ({ commit }, payload) => {
+            return new Promise((resolve, reject) => {
+                axios
+                    .post("/api/logout", payload)
+                    .then(({ data, status }) => {
+                        if (status === 200) {
+                            resolve(data);
+                        }
+                    })
+                    .catch((error) => {
+                        reject(error);
+                    });
+
+            });
+        },
     },
 
 });

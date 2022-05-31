@@ -19,10 +19,10 @@ export default [{
     title: 'finance',
     icon: 'fa-users',
     meta: { requiresAuth: true },
-    redirect: { name: 'finance-welcome' },
+    redirect: { name: 'finance-dashboard' },
     children: [{
-            path: 'welcome',
-            name: 'finance-welcome',
+            path: 'dashboard',
+            name: 'finance-dashboard',
             meta: { requiresAuth: true },
             components: {
                 default: Finance,

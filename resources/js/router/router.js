@@ -7,7 +7,6 @@ import IndexMain from './../components/views/main/IndexMain.vue'
 import Login from './../components/views/auth/Login.vue'
 import Register from './../components/views/auth/Register.vue'
 import Dashboard from './../components/views/main/Dashboard.vue'
-import Accounts from './../components/views/main/AccountData.vue'
 
 Vue.use(VueRouter)
 
@@ -17,24 +16,14 @@ const baseRoutes = [{
         component: IndexMain, // สร้างหน้าหลัก
         meta: { requiresAuth: true },
         children: [{
-                path: '/dashboard',
-                name: "Dashboard",
-                meta: { requiresAuth: true },
-                components: {
-                    default: IndexMain,
-                    MainView: Dashboard,
-                }
-            },
-            {
-                path: '/accounts',
-                name: "Accounts",
-                meta: { requiresAuth: true },
-                components: {
-                    default: IndexMain,
-                    MainView: Accounts,
-                }
+            path: '/dashboard',
+            name: "Dashboard",
+            meta: { requiresAuth: true },
+            components: {
+                default: IndexMain,
+                MainView: Dashboard,
             }
-        ]
+        }]
     },
     {
         path: '/login',

@@ -9,10 +9,10 @@
 
           <v-list-item-content>
             <v-list-item-title>{{ currentUser.name }}</v-list-item-title>
-            <v-list-item-subtitle
-              ><v-icon color="green" size="12px">mdi-circle</v-icon>
-              Online</v-list-item-subtitle
-            >
+            <v-list-item-subtitle>
+              <v-icon color="green" size="12px">mdi-circle</v-icon>
+              Online
+            </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -20,6 +20,15 @@
       <v-divider></v-divider>
 
       <v-list rounded>
+        <v-list-item link to="/">
+          <v-list-item-action>
+            <v-icon>mdi-arrow-left-bold-circle</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>กลับหน้าหลัก</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider class="my-2"></v-divider>
         <v-list-item link to="/finance">
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
@@ -129,76 +138,71 @@
 
 <script>
 export default {
-  name: "Finance",
+  name: 'Finance',
   data: () => ({
     drawer: null,
     revenues: [
-      ["บันทึกใบเสร็จ", "mdi-drag-horizontal-variant", "finance-create"],
+      ['บันทึกใบเสร็จ', 'mdi-drag-horizontal-variant', 'finance-create'],
       [
-        "รายรับปัจจุบัน",
-        "mdi-drag-horizontal-variant",
-        "finance-report-inhalf",
+        'รายรับปัจจุบัน',
+        'mdi-drag-horizontal-variant',
+        'finance-report-inhalf',
       ],
-      ["รายการใบนำส่ง", "mdi-drag-horizontal-variant", "finance-waybill"],
+      ['รายการใบนำส่ง', 'mdi-drag-horizontal-variant', 'finance-waybill'],
       [
-        "รายงานรับประจำวัน",
-        "mdi-drag-horizontal-variant",
-        "finance-report-day",
-      ],
-      [
-        "รายงานรับรายเดือน",
-        "mdi-drag-horizontal-variant",
-        "finance-report-month",
+        'รายงานรับประจำวัน',
+        'mdi-drag-horizontal-variant',
+        'finance-report-day',
       ],
       [
-        "รายงานรับรายไตรมาส",
-        "mdi-drag-horizontal-variant",
-        "finance-report-quarter",
+        'รายงานรับรายเดือน',
+        'mdi-drag-horizontal-variant',
+        'finance-report-month',
       ],
       [
-        "รายงานรับรายปีงบประมาณ",
-        "mdi-drag-horizontal-variant",
-        "finance-report-year",
+        'รายงานรับรายไตรมาส',
+        'mdi-drag-horizontal-variant',
+        'finance-report-quarter',
+      ],
+      [
+        'รายงานรับรายปีงบประมาณ',
+        'mdi-drag-horizontal-variant',
+        'finance-report-year',
       ],
     ],
     expenses: [
-      ["บันทึกการออกเช็ค", "mdi-plus-outline"],
-      ["แยกรายจ่าย", "mdi-file-outline"],
-      ["Update", "mdi-update"],
-      ["Delete", "mdi-delete"],
+      ['บันทึกการออกเช็ค', 'mdi-plus-outline'],
+      ['แยกรายจ่าย', 'mdi-file-outline'],
+      ['Update', 'mdi-update'],
+      ['Delete', 'mdi-delete'],
     ],
     currentUser: {},
-    token: localStorage.getItem("token"),
+    token: localStorage.getItem('token'),
   }),
   methods: {
     logout() {
-      axios
-        .post("/api/logout")
-        .then((response) => {
-          localStorage.removeItem("token");
-          this.$router.push("/login");
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-        });
+      this.$store.dispatch('LOGOUT').then((res) => {
+        localStorage.removeItem('token')
+        this.$router.push('/login')
+      })
     },
     getUser() {
       axios
-        .get("/api/user")
+        .get('/api/user')
         .then((response) => {
-          this.currentUser = response.data;
-          console.log(response.data);
+          this.currentUser = response.data
+          console.log(response.data)
         })
         .catch((error) => {
-          console.log(error.response.data);
-        });
+          console.log(error.response.data)
+        })
     },
   },
   created() {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
-    axios.defaults.headers.post["Content-Type"] =
-      "application/x-www-form-urlencoded";
-    this.getUser();
+    axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+    axios.defaults.headers.post['Content-Type'] =
+      'application/x-www-form-urlencoded'
+    this.getUser()
   },
-};
+}
 </script>
