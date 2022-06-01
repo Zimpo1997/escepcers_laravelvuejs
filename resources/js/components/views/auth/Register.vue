@@ -12,8 +12,8 @@
           <div class="d-flex justify-center mb-2">
             <h3 class="font-weight-bold">โรงพยาบาลคีรีมาศ</h3>
           </div>
-          <v-card class="elevation-12" :loading="true">
-            <v-toolbar dark color="primary">
+          <v-card class="elevation-12 rounded" :loading="isLoading">
+            <v-toolbar dark color="#28BB94">
               <v-toolbar-title>สมัครสมาชิก</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
@@ -80,11 +80,17 @@
             <v-card-actions>
               <v-btn
                 block
-                color="#006738"
-                class="white--text"
+                color="#7A86CC"
+                rounded
+                class="elevation-8"
                 @click="register"
               >
-                <span class="font-weight-bold">สมัครสมาชิก</span>
+                <span
+                  class="font-weight-bold"
+                  style="font-size: 18px; color: #fff;"
+                >
+                  สมัครสมาชิก
+                </span>
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -106,7 +112,7 @@ export default {
     return {
       show1: false,
       show2: false,
-      isLoading: true,
+      isLoading: false,
       userExists: false,
       // form: {
       //   name: "",

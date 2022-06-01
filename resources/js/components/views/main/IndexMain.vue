@@ -74,15 +74,10 @@ export default {
   }),
   methods: {
     logout() {
-      axios
-        .post('/api/logout')
-        .then((response) => {
-          localStorage.removeItem('token')
-          this.$router.push('/login')
-        })
-        .catch((error) => {
-          console.log(error.response.data)
-        })
+      this.$store.dispatch('LOGOUT').then((res) => {
+        localStorage.removeItem('token')
+        this.$router.push('/login')
+      })
     },
     getUser() {
       axios

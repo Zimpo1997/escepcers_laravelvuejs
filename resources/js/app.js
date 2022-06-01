@@ -10,6 +10,7 @@ window.Vue = require('vue').default;
 
 import router from './router/router';
 import store from './store/index';
+import swal from 'sweetalert'
 
 import '@mdi/font/css/materialdesignicons.css';
 import Vuetify from 'vuetify'
@@ -47,5 +48,5 @@ const app = new Vue({
     el: '#app',
     store,
     router,
-    vuetify: new Vuetify(opts),
+    vuetify: new Vuetify(opts)
 });
