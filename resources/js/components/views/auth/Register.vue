@@ -6,11 +6,18 @@
           <div class="d-flex justify-center mb-2">
             <Logo maxWidth="30%" maxHeight="30%" />
           </div>
-          <div class="d-flex justify-center mb-1">
+          <!-- <div class="d-flex justify-center mb-1">
             <h2 class="font-weight-bold">ระบบแผนเงินบำรุง ระดับโรงพยาบาล</h2>
+          </div> -->
+          <div class="d-flex justify-center mb-1">
+            <h2 class="font-weight-bold">
+              <span style="color: #19dcf1;">
+                {{ this.$store.getters.appname }}
+              </span>
+            </h2>
           </div>
           <div class="d-flex justify-center mb-2">
-            <h3 class="font-weight-bold">โรงพยาบาลคีรีมาศ</h3>
+            <h3 class="font-weight-bold">{{ this.$store.getters.hosname }}</h3>
           </div>
           <v-card class="elevation-12 rounded" :loading="isLoading">
             <v-toolbar dark color="#28BB94">

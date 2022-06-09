@@ -1,5 +1,5 @@
 import Finance from '../views/Finance.vue';
-import Welcome from './../views/Welcome.vue';
+import Dashboard from './../views/Dashboard.vue';
 import Details from './../views/Details.vue';
 import Create from './../views/Create.vue';
 import Edit from './../views/Edit.vue';
@@ -26,7 +26,7 @@ export default [{
             meta: { requiresAuth: true },
             components: {
                 default: Finance,
-                MainView: Welcome,
+                MainView: Dashboard,
             }
         },
         {

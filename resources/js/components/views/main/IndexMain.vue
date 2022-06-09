@@ -8,7 +8,9 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>{{ currentUser.name }}</v-list-item-title>
+            <v-list-item-title>
+              {{ currentUser ? currentUser.name : '' }}
+            </v-list-item-title>
             <v-list-item-subtitle>
               <v-icon color="green" size="12px">mdi-circle</v-icon>
               Online
@@ -36,6 +38,14 @@
             <v-list-item-title>Finance</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item link to="/nutrition">
+          <v-list-item-action>
+            <v-icon>mdi-noodles</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Nutrition</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item link @click="logout">
           <v-list-item-action>
             <v-icon color="red">mdi-power</v-icon>
@@ -50,7 +60,10 @@
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>ระบบแผนเงินบำรุง</v-toolbar-title>
+      <v-toolbar-title>
+        {{ hoscode ? hoscode : '' }} {{ hosname ? hosname : '' }} ::
+        {{ appname ? appname : '' }} ::
+      </v-toolbar-title>
     </v-app-bar>
 
     <v-main>
@@ -66,36 +79,33 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data: () => ({
     drawer: null,
-    currentUser: {},
-    token: localStorage.getItem('token'),
   }),
   methods: {
-    logout() {
-      this.$store.dispatch('LOGOUT').then((res) => {
-        localStorage.removeItem('token')
-        this.$router.push('/login')
-      })
-    },
-    getUser() {
-      axios
-        .get('/api/user')
-        .then((response) => {
-          this.currentUser = response.data
-          console.log(response.data)
-        })
-        .catch((error) => {
-          console.log(error.response.data)
-        })
-    },
+    ...mapActions({
+      logout: 'LOGOUT',
+    }),
+  },
+  computed: {
+    ...mapGetters({
+      currentUser: 'currentUser',
+      appname: 'appname',
+      hoscode: 'hoscode',
+      hosname: 'hosname',
+    }),
   },
   created() {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+    axios.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${this.$store.getters.token}`
     axios.defaults.headers.post['Content-Type'] =
       'application/x-www-form-urlencoded'
-    this.getUser()
+    this.$store.dispatch('getCurrentUser').then((res) => {
+      this.$store.dispatch('autoSignIn', res)
+    })
   },
 }
 </script>

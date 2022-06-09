@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import financeRoutes from './../modules/finance/router/index';
+import nutritionRoutes from './../modules/nutrition/router/index';
 
 
 import IndexMain from './../components/views/main/IndexMain.vue'
@@ -15,6 +16,7 @@ const baseRoutes = [{
         name: "Main",
         component: IndexMain, // สร้างหน้าหลัก
         meta: { requiresAuth: true },
+        redirect: { name: 'Dashboard' },
         children: [{
             path: '/dashboard',
             name: "Dashboard",
@@ -39,8 +41,7 @@ const baseRoutes = [{
     }
 ]
 
-const routes = baseRoutes.concat(financeRoutes);
-// const routes = baseRoutes;
+const routes = baseRoutes.concat(financeRoutes, nutritionRoutes);
 
 const router = new VueRouter({
     mode: "history",

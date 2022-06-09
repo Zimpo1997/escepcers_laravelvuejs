@@ -10,7 +10,9 @@ window.Vue = require('vue').default;
 
 import router from './router/router';
 import store from './store/index';
+// import './plugins/vuetify.js';
 import swal from 'sweetalert'
+
 
 import '@mdi/font/css/materialdesignicons.css';
 import Vuetify from 'vuetify'
@@ -48,5 +50,15 @@ const app = new Vue({
     el: '#app',
     store,
     router,
-    vuetify: new Vuetify(opts)
+    vuetify: new Vuetify(opts),
+    created() {
+        if (this.$route.meta.requiresAuth) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${this.$store.getters.token}`
+            axios.defaults.headers.post['Content-Type'] =
+                'application/x-www-form-urlencoded'
+            this.$store.dispatch('getCurrentUser').then((res) => {
+                this.$store.dispatch('autoSignIn', res)
+            })
+        }
+    },
 });

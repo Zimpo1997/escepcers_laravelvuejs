@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 
 export default {
   setup() {},
@@ -15,6 +15,5 @@ export default {
       user: (state) => state.user,
     }),
   },
-};
+}
 </script>
-

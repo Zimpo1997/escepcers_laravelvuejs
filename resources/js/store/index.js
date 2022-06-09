@@ -1,24 +1,23 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import router from './../router/router'
 
 import finance from './../modules/finance/store/index';
+import nutrition from './../modules/nutrition/store/index';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
     modules: {
         finance,
+        nutrition
     },
     state: {
+        appname: 'BCK Office',
+        hoscode: '11245',
+        hosname: 'โรงพยาบาลคีรีมาศ',
         token: localStorage.getItem("token"),
-        currentUser: {
-            name: 'das'
-        },
-        notification: {
-            display: false,
-            text: "Notification placeholder text",
-            alertClass: "success"
-        }
+        currentUser: {},
     },
     mutations: {
         // เปลี่ยนค่าตัวแปรในส่วนของ state
@@ -28,21 +27,38 @@ const store = new Vuex.Store({
         setCurrentUser(state, currentUser) {
             state.currentUser = currentUser;
         },
-        SET_NOTIFICATION: (state, { display, text, alertClass }) => {
-            state.notification.display = display;
-            state.notification.text = text;
-            state.notification.class = alertClass;
-        }
     },
     getters: {
         // ดึงค่าตัวแปรในส่วนของ state
+        appname: state => state.appname,
+        hoscode: state => state.hoscode,
+        hosname: state => state.hosname,
         token: state => state.token,
         currentUser: state => state.currentUser,
-        NOTIFICATION: state => {
-            return state.notification;
-        }
     },
     actions: {
+        autoSignIn({ commit }, payload) {
+            commit('setCurrentUser', payload)
+        },
+
+        getCurrentUser({ commit }) {
+            // getCurrentUser(context) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get("/api/user")
+                    .then(({ data, status }) => {
+                        if (status === 200) {
+                            commit("setCurrentUser", data);
+                            resolve(data);
+                        }
+                    })
+                    .catch((error) => {
+                        reject(error);
+                    });
+
+            });
+        },
+
         // สร้างฟังก์ชันสำหรับการเรียกใช้งานฟังก์ชันของอื่นๆ
         LOGIN: ({ commit }, payload) => {
             return new Promise((resolve, reject) => {
@@ -50,6 +66,7 @@ const store = new Vuex.Store({
                     .post("/api/login", payload)
                     .then(({ data, status }) => {
                         if (status === 200) {
+                            commit("setToken", data);
                             resolve(data);
                         }
                     })
@@ -86,7 +103,10 @@ const store = new Vuex.Store({
                     .post("/api/logout", payload)
                     .then(({ data, status }) => {
                         if (status === 200) {
-                            resolve(data);
+                            commit('setCurrentUser', null)
+                            localStorage.removeItem('token')
+                            router.push('/login')
+                                // resolve(data);
                         }
                     })
                     .catch((error) => {

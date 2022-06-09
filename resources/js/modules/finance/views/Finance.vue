@@ -8,7 +8,9 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>{{ currentUser.name }}</v-list-item-title>
+            <v-list-item-title>
+              {{ currentUser.name ? currentUser.name : '' }}
+            </v-list-item-title>
             <v-list-item-subtitle>
               <v-icon color="green" size="12px">mdi-circle</v-icon>
               Online
@@ -54,58 +56,6 @@
           </v-list-item>
         </v-list-group>
 
-        <!-- <v-list-group :value="true" prepend-icon="mdi-account-circle">
-          <template v-slot:activator>
-            <v-list-item-title>รายจ่าย</v-list-item-title>
-          </template>
-          <v-list-item
-            v-for="([title, icon, links], i) in expenses"
-            :key="i"
-            link
-            :to="{ name: links }"
-          >
-            <v-list-item-icon>
-              <v-icon v-text="icon"></v-icon>
-            </v-list-item-icon>
-            <v-list-item-title v-text="title"></v-list-item-title>
-          </v-list-item>
-        </v-list-group> -->
-        <!-- <v-list-group :value="true" prepend-icon="mdi-account-circle">
-          <template v-slot:activator>
-            <v-list-item-title>Users</v-list-item-title>
-          </template>
-
-          <v-list-group :value="true" no-action sub-group>
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>Admin</v-list-item-title>
-              </v-list-item-content>
-            </template>
-
-            <v-list-item v-for="([title, icon], i) in admins" :key="i" link>
-              <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-title v-text="title"></v-list-item-title>
-            </v-list-item>
-          </v-list-group>
-
-          <v-list-group no-action sub-group>
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>Actions</v-list-item-title>
-              </v-list-item-content>
-            </template>
-
-            <v-list-item v-for="([title, icon], i) in cruds" :key="i" link>
-              <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-title v-text="title"></v-list-item-title>
-            </v-list-item>
-          </v-list-group>
-        </v-list-group> -->
-
         <v-list-item link @click="logout">
           <v-list-item-action>
             <v-icon color="red">mdi-power</v-icon>
@@ -119,10 +69,10 @@
 
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>ระบบแผนเงินบำรุง</v-toolbar-title>
+      <v-toolbar-title>{{ hoscode }} {{ hosname }}</v-toolbar-title>
     </v-app-bar>
 
-    <v-main class="grey lighten-3">
+    <v-main class="lighten-3">
       <v-container>
         <v-row>
           <v-col>
@@ -137,6 +87,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Finance',
   data: () => ({
@@ -176,33 +127,19 @@ export default {
       ['Update', 'mdi-update'],
       ['Delete', 'mdi-delete'],
     ],
-    currentUser: {},
-    token: localStorage.getItem('token'),
   }),
   methods: {
-    logout() {
-      this.$store.dispatch('LOGOUT').then((res) => {
-        localStorage.removeItem('token')
-        this.$router.push('/login')
-      })
-    },
-    getUser() {
-      axios
-        .get('/api/user')
-        .then((response) => {
-          this.currentUser = response.data
-          console.log(response.data)
-        })
-        .catch((error) => {
-          console.log(error.response.data)
-        })
-    },
+    ...mapActions({
+      logout: 'LOGOUT',
+    }),
   },
-  created() {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
-    axios.defaults.headers.post['Content-Type'] =
-      'application/x-www-form-urlencoded'
-    this.getUser()
+  computed: {
+    ...mapGetters({
+      currentUser: 'currentUser',
+      appname: 'appname',
+      hoscode: 'hoscode',
+      hosname: 'hosname',
+    }),
   },
 }
 </script>

@@ -6,11 +6,18 @@
           <div class="d-flex justify-center mb-2">
             <Logo maxWidth="30%" maxHeight="30%" />
           </div>
-          <div class="d-flex justify-center mb-1">
+          <!-- <div class="d-flex justify-center mb-1">
             <h2 class="font-weight-bold">ระบบแผนเงินบำรุง ระดับโรงพยาบาล</h2>
+          </div> -->
+          <div class="d-flex justify-center mb-1">
+            <h2 class="font-weight-bold">
+              <span style="color: #19dcf1;">
+                {{ this.$store.getters.appname }}
+              </span>
+            </h2>
           </div>
           <div class="d-flex justify-center mb-2">
-            <h3 class="font-weight-bold">โรงพยาบาลคีรีมาศ</h3>
+            <h3 class="font-weight-bold">{{ this.$store.getters.hosname }}</h3>
           </div>
 
           <v-card class="elevation-12 rounded" :loading="isLoading">
@@ -65,56 +72,6 @@
       </v-layout>
     </v-container>
   </v-app>
-  <!-- <v-app id="inspire" style="background-color: #fff;">
-    <v-container fluid fill-height>
-      <v-layout align-center justify-center>
-        <v-flex xs12 sm8 md4>
-          <v-card class="elevation-12 rounded-lg" loading>
-            <v-card-text class="">
-              <div class="d-flex justify-center mb-2">
-                <Logo maxWidth="30%" maxHeight="30%" />
-              </div>
-              <div class="d-flex justify-center mb-1">
-                <h2 class="font-weight-bold" color="back">
-                  ระบบแผนเงินบำรุง ระดับโรงพยาบาล
-                </h2>
-              </div>
-              <div class="d-flex justify-center mb-2">
-                <h3 class="font-weight-bold" color="back">โรงพยาบาลคีรีมาศ</h3>
-              </div>
-              <div class="d-flex justify-center">
-                <v-form ref="loginForm" v-model="valid" lazy-validation>
-                  <v-text-field
-                    prepend-icon="mdi-account-circle"
-                    v-model="form.username"
-                    :rules="usernameRules"
-                    :counter="45"
-                    label="Username"
-                    :error-message="errors.username"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    prepend-icon="mdi-lock"
-                    v-model="form.password"
-                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[rules.required, rules.min]"
-                    :type="show1 ? 'text' : 'password'"
-                    label="Password"
-                    hint="At least 8 characters"
-                    counter
-                    :error-message="errors.password"
-                    autocomplete="on"
-                    required
-                    @click:append="show1 = !show1"
-                  ></v-text-field>
-                </v-form>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-app> -->
 </template>
 
 <script>
@@ -170,22 +127,6 @@ export default {
         .finally(() => {
           this.isLoading = false
         })
-
-      // this.isLoading = "red";
-      // axios
-      //   .post("/api/login", this.form)
-      //   .then((response) => {
-      //     localStorage.setItem("token", response.data);
-
-      //     this.$refs.loginForm.reset();
-      //     this.$router.push("/dashboard");
-      //   })
-      //   .catch((error) => {
-      //     this.errors = error.response.data.errors;
-      //   })
-      //   .finally(() => {
-      //     this.isLoading = false;
-      //   });
     },
   },
 }
