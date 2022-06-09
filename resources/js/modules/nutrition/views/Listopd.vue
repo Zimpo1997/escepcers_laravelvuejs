@@ -117,38 +117,19 @@
           </v-col>
         </v-row>
         <h2>ผล Lab</h2>
-        <v-simple-table class="elevation-1">
-          <template v-slot:default>
-            <thead>
-              <tr>
-                <th
-                  v-for="header in labheaders"
-                  :key="header.value"
-                  class="text-left"
-                >
-                  {{ header.text }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in labitems" :key="item.name">
-                <td
-                  v-for="header in labheaders"
-                  :key="header.value"
-                  v-html="item[header.value]"
-                ></td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
+        <Labs :labs="patient.labs" v-if="patient" />
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
+import Labs from './../components/Labs.vue'
 export default {
   name: 'NutritionListopd',
+  components: {
+    Labs,
+  },
   data: () => ({
     patient: {
       hn: null,
@@ -162,18 +143,20 @@ export default {
       height: null,
       diagnosis: null,
       diagnosis_description: null,
-      lab: {
-        Hemoglobin: null,
-        Hematocrit: null,
-        RBCcount: null,
-        WBCcount: null,
-        Pltcount: null,
-        MCV: null,
-        MCH: null,
-        MCHC: null,
-        RDW: null,
-        MPV: null,
-      },
+      labs: [
+        {
+          Hemoglobin: null,
+          Hematocrit: null,
+          RBCcount: null,
+          WBCcount: null,
+          Pltcount: null,
+          MCV: null,
+          MCH: null,
+          MCHC: null,
+          RDW: null,
+          MPV: null,
+        },
+      ],
     },
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
@@ -249,18 +232,20 @@ export default {
         diagnosis: 'S0122XA',
         diagnosis_description:
           'luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh in',
-        lab: {
-          Hemoglobin: 14,
-          Hematocrit: 22,
-          RBCcount: 7,
-          WBCcount: 29673,
-          Pltcount: 273077,
-          MCV: 15,
-          MCH: 22,
-          MCHC: 65,
-          RDW: 19,
-          MPV: 50,
-        },
+        labs: [
+          {
+            Hemoglobin: 14,
+            Hematocrit: 22,
+            RBCcount: 7,
+            WBCcount: 29673,
+            Pltcount: 273077,
+            MCV: 15,
+            MCH: 22,
+            MCHC: 65,
+            RDW: 19,
+            MPV: 50,
+          },
+        ],
       },
       {
         hn: '2444131371',
@@ -275,18 +260,20 @@ export default {
         diagnosis: 'S55212S',
         diagnosis_description:
           'ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec',
-        lab: {
-          Hemoglobin: 42,
-          Hematocrit: 22,
-          RBCcount: 2,
-          WBCcount: 76141,
-          Pltcount: 122694,
-          MCV: 54,
-          MCH: 83,
-          MCHC: 18,
-          RDW: 5,
-          MPV: 77,
-        },
+        labs: [
+          {
+            Hemoglobin: 42,
+            Hematocrit: 22,
+            RBCcount: 2,
+            WBCcount: 76141,
+            Pltcount: 122694,
+            MCV: 54,
+            MCH: 83,
+            MCHC: 18,
+            RDW: 5,
+            MPV: 77,
+          },
+        ],
       },
       {
         hn: '0595772501',
@@ -301,18 +288,20 @@ export default {
         diagnosis: 'S82131F',
         diagnosis_description:
           'ornare consequat lectus in est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc',
-        lab: {
-          Hemoglobin: 32,
-          Hematocrit: 58,
-          RBCcount: 6,
-          WBCcount: 49205,
-          Pltcount: 974427,
-          MCV: 58,
-          MCH: 59,
-          MCHC: 92,
-          RDW: 19,
-          MPV: 53,
-        },
+        labs: [
+          {
+            Hemoglobin: 32,
+            Hematocrit: 58,
+            RBCcount: 6,
+            WBCcount: 49205,
+            Pltcount: 974427,
+            MCV: 58,
+            MCH: 59,
+            MCHC: 92,
+            RDW: 19,
+            MPV: 53,
+          },
+        ],
       },
       {
         hn: '9210558588',
@@ -327,18 +316,20 @@ export default {
         diagnosis: 'S6701XS',
         diagnosis_description:
           'fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in',
-        lab: {
-          Hemoglobin: 18,
-          Hematocrit: 66,
-          RBCcount: 8,
-          WBCcount: 64299,
-          Pltcount: 618971,
-          MCV: 55,
-          MCH: 8,
-          MCHC: 71,
-          RDW: 63,
-          MPV: 40,
-        },
+        labs: [
+          {
+            Hemoglobin: 18,
+            Hematocrit: 66,
+            RBCcount: 8,
+            WBCcount: 64299,
+            Pltcount: 618971,
+            MCV: 55,
+            MCH: 8,
+            MCHC: 71,
+            RDW: 63,
+            MPV: 40,
+          },
+        ],
       },
       {
         hn: '3579750224',
@@ -353,18 +344,20 @@ export default {
         diagnosis: 'I69869',
         diagnosis_description:
           'dui vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam a odio',
-        lab: {
-          Hemoglobin: 41,
-          Hematocrit: 43,
-          RBCcount: 10,
-          WBCcount: 31365,
-          Pltcount: 605054,
-          MCV: 82,
-          MCH: 1,
-          MCHC: 45,
-          RDW: 8,
-          MPV: 33,
-        },
+        labs: [
+          {
+            Hemoglobin: 41,
+            Hematocrit: 43,
+            RBCcount: 10,
+            WBCcount: 31365,
+            Pltcount: 605054,
+            MCV: 82,
+            MCH: 1,
+            MCHC: 45,
+            RDW: 8,
+            MPV: 33,
+          },
+        ],
       },
       {
         hn: '3176453779',
@@ -379,18 +372,20 @@ export default {
         diagnosis: 'V173',
         diagnosis_description:
           'parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis parturient montes nascetur',
-        lab: {
-          Hemoglobin: 26,
-          Hematocrit: 39,
-          RBCcount: 10,
-          WBCcount: 40964,
-          Pltcount: 165618,
-          MCV: 91,
-          MCH: 30,
-          MCHC: 20,
-          RDW: 23,
-          MPV: 97,
-        },
+        labs: [
+          {
+            Hemoglobin: 26,
+            Hematocrit: 39,
+            RBCcount: 10,
+            WBCcount: 40964,
+            Pltcount: 165618,
+            MCV: 91,
+            MCH: 30,
+            MCHC: 20,
+            RDW: 23,
+            MPV: 97,
+          },
+        ],
       },
       {
         hn: '5378843677',
@@ -405,18 +400,20 @@ export default {
         diagnosis: 'S06353S',
         diagnosis_description:
           'placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus',
-        lab: {
-          Hemoglobin: 17,
-          Hematocrit: 40,
-          RBCcount: 3,
-          WBCcount: 73663,
-          Pltcount: 911918,
-          MCV: 36,
-          MCH: 50,
-          MCHC: 94,
-          RDW: 20,
-          MPV: 3,
-        },
+        labs: [
+          {
+            Hemoglobin: 17,
+            Hematocrit: 40,
+            RBCcount: 3,
+            WBCcount: 73663,
+            Pltcount: 911918,
+            MCV: 36,
+            MCH: 50,
+            MCHC: 94,
+            RDW: 20,
+            MPV: 3,
+          },
+        ],
       },
       {
         hn: '9397432923',
@@ -431,18 +428,20 @@ export default {
         diagnosis: 'R4189',
         diagnosis_description:
           'maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque porta volutpat erat quisque',
-        lab: {
-          Hemoglobin: 33,
-          Hematocrit: 1,
-          RBCcount: 8,
-          WBCcount: 16793,
-          Pltcount: 591237,
-          MCV: 64,
-          MCH: 94,
-          MCHC: 8,
-          RDW: 30,
-          MPV: 98,
-        },
+        labs: [
+          {
+            Hemoglobin: 33,
+            Hematocrit: 1,
+            RBCcount: 8,
+            WBCcount: 16793,
+            Pltcount: 591237,
+            MCV: 64,
+            MCH: 94,
+            MCHC: 8,
+            RDW: 30,
+            MPV: 98,
+          },
+        ],
       },
       {
         hn: '6112125692',
@@ -457,18 +456,20 @@ export default {
         diagnosis: 'T43015D',
         diagnosis_description:
           'dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl',
-        lab: {
-          Hemoglobin: 10,
-          Hematocrit: 78,
-          RBCcount: 1,
-          WBCcount: 6249,
-          Pltcount: 269996,
-          MCV: 4,
-          MCH: 59,
-          MCHC: 52,
-          RDW: 32,
-          MPV: 15,
-        },
+        labs: [
+          {
+            Hemoglobin: 10,
+            Hematocrit: 78,
+            RBCcount: 1,
+            WBCcount: 6249,
+            Pltcount: 269996,
+            MCV: 4,
+            MCH: 59,
+            MCHC: 52,
+            RDW: 32,
+            MPV: 15,
+          },
+        ],
       },
       {
         hn: '9670125529',
@@ -483,18 +484,20 @@ export default {
         diagnosis: 'S62231P',
         diagnosis_description:
           'dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt',
-        lab: {
-          Hemoglobin: 46,
-          Hematocrit: 34,
-          RBCcount: 1,
-          WBCcount: 83743,
-          Pltcount: 146143,
-          MCV: 60,
-          MCH: 32,
-          MCHC: 36,
-          RDW: 50,
-          MPV: 74,
-        },
+        labs: [
+          {
+            Hemoglobin: 46,
+            Hematocrit: 34,
+            RBCcount: 1,
+            WBCcount: 83743,
+            Pltcount: 146143,
+            MCV: 60,
+            MCH: 32,
+            MCHC: 36,
+            RDW: 50,
+            MPV: 74,
+          },
+        ],
       },
     ],
   }),
@@ -511,25 +514,7 @@ export default {
     handleClick(value) {
       this.patient = null
       this.patient = value
-      console.log(this.patient)
       //   this.checkLab(value)
-    },
-
-    checkLab(value) {
-      this.patient.lab = [
-        {
-          Hemoglobin: 10,
-          Hematocrit: 78,
-          RBCcount: 1,
-          WBCcount: 6249,
-          Pltcount: 269996,
-          MCV: 4,
-          MCH: 59,
-          MCHC: 52,
-          RDW: 32,
-          MPV: 74,
-        },
-      ]
     },
   },
 }

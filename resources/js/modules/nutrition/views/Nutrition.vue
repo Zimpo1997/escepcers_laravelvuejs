@@ -39,20 +39,20 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item link to="/nutrition">
+          <v-list-item-action>
+            <v-icon>mdi-account-group</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>รายการผู้ป่วยนอก</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item link :to="{ name: 'nutrition-listopd' }">
           <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
+            <v-icon>mdi-account-multiple</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>รายการผู้ป่วยใน</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link to="/nutrition">
-          <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item link to="/nutrition">
